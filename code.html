@@ -1,0 +1,250 @@
+!DOCTYPE html
+html lang=ko
+head
+    meta charset=UTF-8
+    meta name=viewport content=width=device-width, initial-scale=1.0
+    title코딩 학습의 모든 것title
+    style
+         기본 스타일 
+        body {
+            font-family 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height 1.6;
+            margin 0;
+            padding 0;
+            background-color #f4f4f4;
+            color #333;
+        }
+        .container {
+            width 80%;
+            margin auto;
+            overflow hidden;
+            padding 0 20px;
+        }
+
+         헤더 스타일 
+        header {
+            background #333;
+            color #fff;
+            padding-top 30px;
+            min-height 70px;
+            border-bottom #0779e4 3px solid;
+        }
+        header h1 {
+            text-align center;
+            margin 0;
+            font-size 28px;
+        }
+
+         섹션 스타일 
+        .feature-section {
+            padding 20px;
+            margin-top 20px;
+            background #fff;
+            border-radius 5px;
+            box-shadow 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .feature-section h2 {
+            color #0779e4;
+            border-bottom 2px solid #f4f4f4;
+            padding-bottom 10px;
+        }
+
+         코드 편집기 스타일 
+        #code-editor {
+            width 100%;
+            height 200px;
+            background #2d2d2d;
+            color #f8f8f2;
+            font-family 'Courier New', Courier, monospace;
+            font-size 16px;
+            padding 10px;
+            border 1px solid #ccc;
+            border-radius 5px;
+            box-sizing border-box;  패딩과 테두리가 너비에 포함되도록 설정 
+        }
+        #code-output {
+            width 100%;
+            min-height 50px;
+            background #e0e0e0;
+            margin-top 10px;
+            padding 10px;
+            border-radius 5px;
+            white-space pre-wrap;  줄바꿈 및 공백 유지 
+            box-sizing border-box;
+        }
+
+         퀴즈 스타일 
+        .quiz-container {
+            padding 15px;
+        }
+        .question {
+            font-weight bold;
+            margin-bottom 10px;
+        }
+        .options div {
+            margin-bottom 5px;
+        }
+        #quiz-result {
+            margin-top 15px;
+            font-weight bold;
+        }
+
+         리소스 링크 스타일 
+        .resource-list ul {
+            list-style none;
+            padding 0;
+        }
+        .resource-list li {
+            background #eef;
+            margin-bottom 10px;
+            padding 10px;
+            border-left 5px solid #0779e4;
+        }
+        .resource-list a {
+            text-decoration none;
+            color #333;
+            font-weight bold;
+        }
+
+         버튼 스타일 
+        button {
+            display inline-block;
+            background #0779e4;
+            color #fff;
+            padding 10px 20px;
+            border none;
+            border-radius 5px;
+            cursor pointer;
+            font-size 16px;
+            margin-top 10px;
+        }
+        buttonhover {
+            background #0056b3;
+        }
+        
+         푸터 스타일 
+        footer {
+            text-align center;
+            padding 20px;
+            margin-top 20px;
+            background #333;
+            color #fff;
+        }
+    style
+head
+body
+
+    header
+        div class=container
+            h1코딩 학습 웹사이트 🚀h1
+        div
+    header
+
+    div class=container
+        section id=editor-section class=feature-section
+            h2✍️ 코드 에디터h2
+            p아래 텍스트 상자에 HTML 또는 JavaScript 코드를 입력하고 '실행' 버튼을 눌러보세요.p
+            textarea id=code-editor placeholder=여기에 코드를 작성하세요. 예 h1안녕하세요!h1textarea
+            button onclick=runCode()코드 실행button
+            h3결과h3
+            div id=code-outputdiv
+        section
+
+        section id=quiz-section class=feature-section
+            h2🧠 코딩 퀴즈h2
+            div id=quiz-container
+                div
+            button onclick=submitQuiz()정답 확인button
+            div id=quiz-resultdiv
+        section
+
+        section id=resources-section class=feature-section
+            h2📚 추천 학습 자료h2
+            div class=resource-list
+                ul
+                    lia href=httpsdeveloper.mozilla.orgkodocsWebJavaScript target=_blankMDN - JavaScript 가이드ali
+                    lia href=httpswww.w3schools.com target=_blankW3Schools Online Web Tutorialsali
+                    lia href=httpsstackoverflow.com target=_blankStack Overflow - 개발자 Q&A 커뮤니티ali
+                    lia href=httpsgithub.com target=_blankGitHub - 코드 공유 및 협업 플랫폼ali
+                ul
+            div
+        section
+    div
+    
+    footer
+        p&copy; 2025 코딩 학습 커뮤니티. All Rights Reserved.p
+    footer
+
+    script
+         --- 1. 코드 에디터 기능 ---
+        function runCode() {
+            const codeEditor = document.getElementById('code-editor');
+            const codeOutput = document.getElementById('code-output');
+            
+             사용자가 입력한 코드를 가져옵니다.
+            const userInput = codeEditor.value;
+            
+             결과를 출력 영역에 HTML로 렌더링합니다.
+             주의 실제 서비스에서는 보안을 위해 eval() 이나 innerHTML에 사용자 입력을 직접 넣는 것을 피해야 합니다.
+             여기서는 학습 목적으로 간단하게 구현합니다.
+            codeOutput.innerHTML = userInput; 
+        }
+
+         --- 2. 코딩 퀴즈 기능 ---
+        const quizData = [
+            {
+                question HTML에서 가장 큰 제목을 나타내는 태그는 무엇일까요,
+                options [h6, h1, h2, head],
+                answer h1
+            },
+            {
+                question CSS에서 글자 색상을 변경하는 속성은 무엇일까요,
+                options [background-color, font-size, color, text-align],
+                answer color
+            },
+            {
+                question JavaScript에서 변수를 선언할 때 사용하는 키워드가 아닌 것은,
+                options [var, let, const, variable],
+                answer variable
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+
+         퀴즈 질문들을 화면에 표시하는 함수
+        function loadQuiz() {
+            let quizHTML = '';
+            quizData.forEach((quizItem, index) = {
+                quizHTML += `div class=question-item`;
+                quizHTML += `div class=question${index + 1}. ${quizItem.question}div`;
+                quizHTML += `div class=options`;
+                quizItem.options.forEach(option = {
+                    quizHTML += `divinput type=radio name=question${index} value=${option} ${option}div`;
+                });
+                quizHTML += `div`;
+                quizHTML += `divhr`;
+            });
+            quizContainer.innerHTML = quizHTML;
+        }
+        
+         퀴즈 정답을 확인하고 점수를 보여주는 함수
+        function submitQuiz() {
+            let score = 0;
+            quizData.forEach((quizItem, index) = {
+                const selectedOption = document.querySelector(`input[name=question${index}]checked`);
+                if (selectedOption && selectedOption.value === quizItem.answer) {
+                    score++;
+                }
+            });
+            
+            const quizResult = document.getElementById('quiz-result');
+            quizResult.innerHTML = `총 ${quizData.length}문제 중 ${score}문제를 맞혔습니다! 🎉`;
+        }
+
+         --- 페이지가 로드되면 퀴즈를 자동으로 불러옵니다 ---
+        window.onload = function() {
+            loadQuiz();
+        };
+    script
+body
+html
