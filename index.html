@@ -7,7 +7,6 @@
     <style>
         /* 기본 스타일 */
         body {
-            /* 10번째 줄: 웹사이트의 기본 글꼴을 지정합니다. 사용자의 PC 환경에 따라 순서대로 적용됩니다. (오류 아님) */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
@@ -145,7 +144,7 @@
         <section id="editor-section" class="feature-section">
             <h2>✍️ 코드 에디터</h2>
             <p>아래 텍스트 상자에 HTML 또는 JavaScript 코드를 입력하고 '실행' 버튼을 눌러보세요.</p>
-            <textarea id="code-editor" placeholder="여기에 코드를 작성하세요. 예: <h1>안녕하세요!</h1>"></textarea>
+            <textarea id="code-editor" placeholder="여기에 코드를 작성하세요. 예: &lt;h1&gt;안녕하세요!&lt;/h1&gt;"></textarea>
             <button onclick="runCode()">코드 실행</button>
             <h3>결과:</h3>
             <div id="code-output"></div>
@@ -181,13 +180,7 @@
         function runCode() {
             const codeEditor = document.getElementById('code-editor');
             const codeOutput = document.getElementById('code-output');
-            
-            // 사용자가 입력한 코드를 가져옵니다.
             const userInput = codeEditor.value;
-            
-            // 결과를 출력 영역에 HTML로 렌더링합니다.
-            // 주의: 실제 서비스에서는 보안을 위해 eval() 이나 innerHTML에 사용자 입력을 직접 넣는 것을 피해야 합니다.
-            // 여기서는 학습 목적으로 간단하게 구현합니다.
             codeOutput.innerHTML = userInput; 
         }
 
@@ -195,8 +188,9 @@
         const quizData = [
             {
                 question: "HTML에서 가장 큰 제목을 나타내는 태그는 무엇일까요?",
-                options: ["<h6>", "<h1>", "<h2>", "<head>"],
-                answer: "<h1>"
+                // ❗수정된 부분: 꺽쇠괄호를 HTML 엔티티 코드로 변경하여 태그가 문자로 보이게 함
+                options: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h2&gt;", "&lt;head&gt;"],
+                answer: "&lt;h1&gt;"
             },
             {
                 question: "CSS에서 글자 색상을 변경하는 속성은 무엇일까요?",
@@ -220,6 +214,7 @@
                 quizHTML += `<div class="question">${index + 1}. ${quizItem.question}</div>`;
                 quizHTML += `<div class="options">`;
                 quizItem.options.forEach(option => {
+                    // ❗수정된 부분: input의 value와 화면에 표시되는 텍스트 모두 엔티티 코드가 적용되도록 함
                     quizHTML += `<div><input type="radio" name="question${index}" value="${option}"> ${option}</div>`;
                 });
                 quizHTML += `</div>`;
