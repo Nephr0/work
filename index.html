@@ -6,14 +6,35 @@
     <title>코딩 학습의 모든 것</title>
     <style>
         /* 기본 스타일 */
+        :root {
+            --bg-color: #f4f4f4;
+            --text-color: #333;
+            --card-bg-color: #fff;
+            --primary-color: #0779e4;
+            --border-color: #f4f4f4;
+            --resource-bg-color: #eef;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        /* 🌒 다크 모드 스타일 */
+        body.dark-mode {
+            --bg-color: #2d2d2d;
+            --text-color: #f4f4f4;
+            --card-bg-color: #333;
+            --primary-color: #4dabf7;
+            --border-color: #444;
+            --resource-bg-color: #3a3a3a;
+        }
+        
         .container {
             width: 80%;
             margin: auto;
@@ -23,14 +44,16 @@
 
         /* 헤더 스타일 */
         header {
-            background: #333;
-            color: #fff;
-            padding-top: 30px;
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            padding: 20px 0;
             min-height: 70px;
-            border-bottom: #0779e4 3px solid;
+            border-bottom: var(--primary-color) 3px solid;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         }
         header h1 {
-            text-align: center;
             margin: 0;
             font-size: 28px;
         }
@@ -39,13 +62,13 @@
         .feature-section {
             padding: 20px;
             margin-top: 20px;
-            background: #fff;
+            background: var(--card-bg-color);
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .feature-section h2 {
-            color: #0779e4;
-            border-bottom: 2px solid #f4f4f4;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
         }
 
@@ -60,33 +83,36 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* 패딩과 테두리가 너비에 포함되도록 설정 */
+            box-sizing: border-box;
         }
         #code-output {
             width: 100%;
             min-height: 50px;
             background: #e0e0e0;
+            color: #333;
             margin-top: 10px;
             padding: 10px;
             border-radius: 5px;
-            white-space: pre-wrap; /* 줄바꿈 및 공백 유지 */
+            white-space: pre-wrap;
             box-sizing: border-box;
         }
-
-        /* 퀴즈 스타일 */
-        .quiz-container {
-            padding: 15px;
+        
+        /* 퀴즈 진행 상태 바 스타일 */
+        #progress-bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
-        .question {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .options div {
-            margin-bottom: 5px;
-        }
-        #quiz-result {
-            margin-top: 15px;
-            font-weight: bold;
+        #progress-bar {
+            width: 0%;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            transition: width 0.5s ease-in-out;
         }
 
         /* 리소스 링크 스타일 */
@@ -95,21 +121,21 @@
             padding: 0;
         }
         .resource-list li {
-            background: #eef;
+            background: var(--resource-bg-color);
             margin-bottom: 10px;
             padding: 10px;
-            border-left: 5px solid #0779e4;
+            border-left: 5px solid var(--primary-color);
         }
         .resource-list a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-color);
             font-weight: bold;
         }
 
         /* 버튼 스타일 */
         button {
             display: inline-block;
-            background: #0779e4;
+            background: var(--primary-color);
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -117,43 +143,91 @@
             cursor: pointer;
             font-size: 16px;
             margin-top: 10px;
+            margin-right: 5px;
         }
         button:hover {
-            background: #0056b3;
+            opacity: 0.9;
+        }
+        .secondary-button {
+            background: #6c757d;
         }
         
-        /* 푸터 스타일 */
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            background: #333;
-            color: #fff;
+        /* 다크 모드 토글 스위치 스타일 */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+            margin: 0 10px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container">
-            <h1>코딩 학습 웹사이트 🚀</h1>
+        <h1>코딩 학습 웹사이트 🚀</h1>
+        <div class="theme-switch-wrapper">
+            <span>☀️</span>
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+            <span>🌙</span>
         </div>
     </header>
 
     <div class="container">
         <section id="editor-section" class="feature-section">
             <h2>✍️ 코드 에디터</h2>
-            <p>아래 텍스트 상자에 HTML 또는 JavaScript 코드를 입력하고 '실행' 버튼을 눌러보세요.</p>
+            <p>아래 텍스트 상자에 코드를 입력하고 버튼을 눌러보세요.</p>
             <textarea id="code-editor" placeholder="여기에 코드를 작성하세요. 예: &lt;h1&gt;안녕하세요!&lt;/h1&gt;"></textarea>
             <button onclick="runCode()">코드 실행</button>
+            <button onclick="copyCode()" class="secondary-button">코드 복사</button>
             <h3>결과:</h3>
             <div id="code-output"></div>
         </section>
 
         <section id="quiz-section" class="feature-section">
             <h2>🧠 코딩 퀴즈</h2>
-            <div id="quiz-container">
-                </div>
+            <div id="progress-bar-container">
+                <div id="progress-bar">0%</div>
+            </div>
+            <div id="quiz-container"></div>
             <button onclick="submitQuiz()">정답 확인</button>
             <div id="quiz-result"></div>
         </section>
@@ -177,20 +251,34 @@
 
     <script>
         // --- 1. 코드 에디터 기능 ---
+        const codeEditor = document.getElementById('code-editor');
+        const codeOutput = document.getElementById('code-output');
+        
         function runCode() {
-            const codeEditor = document.getElementById('code-editor');
-            const codeOutput = document.getElementById('code-output');
-            const userInput = codeEditor.value;
-            codeOutput.innerHTML = userInput; 
+            codeOutput.innerHTML = codeEditor.value; 
         }
 
+        function copyCode() {
+            if (!navigator.clipboard) {
+                codeEditor.select();
+                document.execCommand('copy');
+                alert("코드가 복사되었습니다!");
+                return;
+            }
+            navigator.clipboard.writeText(codeEditor.value).then(() => {
+                alert("코드가 클립보드에 복사되었습니다!");
+            }).catch(err => {
+                console.error('복사 실패:', err);
+            });
+        }
+        
         // --- 2. 코딩 퀴즈 기능 ---
         const quizData = [
             {
                 question: "HTML에서 가장 큰 제목을 나타내는 태그는 무엇일까요?",
-                // ❗수정된 부분: 꺽쇠괄호를 HTML 엔티티 코드로 변경하여 태그가 문자로 보이게 함
                 options: ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;h2&gt;", "&lt;head&gt;"],
-                answer: "&lt;h1&gt;"
+                // ❗수정된 부분: 비교를 위해 실제 태그값으로 변경
+                answer: "<h1>" 
             },
             {
                 question: "CSS에서 글자 색상을 변경하는 속성은 무엇일까요?",
@@ -203,43 +291,71 @@
                 answer: "variable"
             }
         ];
-
         const quizContainer = document.getElementById('quiz-container');
-
-        // 퀴즈 질문들을 화면에 표시하는 함수
+        const progressBar = document.getElementById('progress-bar');
+        
         function loadQuiz() {
-            let quizHTML = '';
-            quizData.forEach((quizItem, index) => {
-                quizHTML += `<div class="question-item">`;
-                quizHTML += `<div class="question">${index + 1}. ${quizItem.question}</div>`;
-                quizHTML += `<div class="options">`;
-                quizItem.options.forEach(option => {
-                    // ❗수정된 부분: input의 value와 화면에 표시되는 텍스트 모두 엔티티 코드가 적용되도록 함
-                    quizHTML += `<div><input type="radio" name="question${index}" value="${option}"> ${option}</div>`;
-                });
-                quizHTML += `</div>`;
-                quizHTML += `</div><hr>`;
+            quizContainer.innerHTML = quizData.map((item, index) => `
+                <div class="question-item">
+                    <div class="question">${index + 1}. ${item.question}</div>
+                    <div class="options">
+                        ${item.options.map(option => {
+                            // value에는 실제 값을, 화면에는 변환된 텍스트를 보여주도록 수정
+                            const decodedOption = new DOMParser().parseFromString(option, 'text/html').body.textContent;
+                            return `<div><input type="radio" name="question${index}" value="${decodedOption}"> ${option}</div>`
+                        }).join('')}
+                    </div>
+                </div><hr>
+            `).join('');
+            
+            document.querySelectorAll('.options input').forEach(input => {
+                input.addEventListener('change', updateProgress);
             });
-            quizContainer.innerHTML = quizHTML;
         }
         
-        // 퀴즈 정답을 확인하고 점수를 보여주는 함수
         function submitQuiz() {
             let score = 0;
-            quizData.forEach((quizItem, index) => {
-                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-                if (selectedOption && selectedOption.value === quizItem.answer) {
+            quizData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === item.answer) {
                     score++;
                 }
             });
-            
-            const quizResult = document.getElementById('quiz-result');
-            quizResult.innerHTML = `총 ${quizData.length}문제 중 ${score}문제를 맞혔습니다! 🎉`;
+            document.getElementById('quiz-result').innerHTML = `총 ${quizData.length}문제 중 ${score}문제를 맞혔습니다! 🎉`;
         }
 
-        // --- 페이지가 로드되면 퀴즈를 자동으로 불러옵니다 ---
-        window.onload = function() {
+        function updateProgress() {
+            const answeredCount = document.querySelectorAll('.options input:checked').length;
+            const progressPercentage = (answeredCount / quizData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${Math.round(progressPercentage)}%`;
+        }
+        
+        // --- 3. 🌒 다크 모드 기능 ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.body.classList.add(currentTheme);
+            if (currentTheme === 'dark-mode') {
+                themeToggle.checked = true;
+            }
+        }
+        
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.removeItem('theme');
+            }
+        });
+
+        // --- 페이지가 로드되면 실행될 함수들 ---
+        window.onload = () => {
             loadQuiz();
+            updateProgress();
         };
     </script>
 </body>
